@@ -15,17 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});
 
-// Route::get('bookables', function(Request $request) {
-//   return Bookable::all();
-// });
-//
-// Route::get('bookables/{id}', function(Request $request, $bookableId) {
-//   return Bookable::findOrFail($bookableId);
-// });
 
-Route::get('bookables', 'Api\BookableController@index');
-Route::get('bookables/{id}','Api\BookableController@show');
+
+// Route::get('bookables', 'Api\BookableController@index');
+// Route::get('bookables/{id}','Api\BookableController@show');
+
+Route::apiResource('bookables', 'Api\BookableController')
+  ->only(['index', 'show']);
