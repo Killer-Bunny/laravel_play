@@ -33,7 +33,7 @@
 
 <script>
   //import moment from 'moment';
-
+s
   export default {
     props: {
       bookableId: [String, Number]
