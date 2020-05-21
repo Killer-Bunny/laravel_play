@@ -13,7 +13,7 @@
             Shalol
           </div>
           <div class="col-md-6 d-flex justify-content-end">
-            <star-rating :rating="review.rating" class="fa-lg"></star-rating>
+            <star-rating v-model="review.rating" class="fa-lg"></star-rating>
           </div>
         </div>
         <div class="row">
@@ -33,7 +33,7 @@
 
 <script>
   //import moment from 'moment';
-s
+
   export default {
     props: {
       bookableId: [String, Number]

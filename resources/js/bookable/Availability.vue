@@ -66,8 +66,8 @@
     },
     data() {
       return {
-        from: null/*this.$store.state.lastSearch.from*/,
-        to: null/*this.$store.state.lastSearch.to*/,
+        from: this.$store.state.lastSearch.from,
+        to: this.$store.state.lastSearch.to,
         loading: false,
         status: null
       }
@@ -77,7 +77,7 @@
         this.loading = true;
         this.errors = null;
 
-        this.$store.commit('setLastSearch', {
+        this.$store.dispatch('setLastSearch', {
           from: this.from,
           to: this.to
         })
