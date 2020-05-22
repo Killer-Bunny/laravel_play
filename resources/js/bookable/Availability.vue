@@ -2,8 +2,10 @@
   <div class="">
     <h6 class="text-uppercase text-secondary font-weight-bolder">
       Check Availability
-      <span v-if="noAvailability" class="text-danger">(NOT AVAILABLE)</span>
-      <span v-if="hasAvailability" class="text-success">(Available)</span>
+      <transition name="fade">
+        <span v-if="noAvailability" class="text-danger">(NOT AVAILABLE)</span>
+        <span v-if="hasAvailability" class="text-success">(Available)</span>
+      </transition>
     </h6>
     <div class="form-row">
       <div class="form-group col-md-6">
@@ -33,7 +35,13 @@
         <v-errors :errors="errorFor('to')"></v-errors>
       </div>
     </div>
-    <button class="btn btn-secondary btn-block" @click="check" :disabled="loading">Check</button>
+    <button class="btn btn-secondary btn-block" @click="check" :disabled="loading">
+      <span v-if="!loading">Check</span>
+      <span v-if="loading">
+        <i class="fa fa-circle-notch fa-spin"></i>
+        Checking...
+      </span>
+    </button>
   </div>
 </template>
 
@@ -85,7 +93,6 @@
         axios.get(
           `/api/bookables/${this.bookableId}/availability?from=${this.from}&to=${this.to}`
         ).then(response => {
-          console.log(this);
           this.status = response.status;
         }).catch(error => {
           if(is422(error)) {
@@ -109,7 +116,7 @@
       }
     },
     create() {
-      console.log(this.$store.state)
+
     }
   }
 </script>

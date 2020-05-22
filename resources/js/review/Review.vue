@@ -133,7 +133,6 @@
         axios
           .post(`/api/reviews`, this.review)
           .then(response => {
-            console.log(response);
             this.success = 201 == response.status;
           })
           .catch(err => {

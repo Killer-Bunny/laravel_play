@@ -2024,6 +2024,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2050,7 +2058,6 @@ __webpack_require__.r(__webpack_exports__);
         to: this.to
       });
       axios.get("/api/bookables/".concat(this.bookableId, "/availability?from=").concat(this.from, "&to=").concat(this.to)).then(function (response) {
-        console.log(_this);
         _this.status = response.status;
       })["catch"](function (error) {
         if (Object(_shared_utils_response__WEBPACK_IMPORTED_MODULE_0__["is422"])(error)) {
@@ -2075,9 +2082,7 @@ __webpack_require__.r(__webpack_exports__);
       return 403 == this.status;
     }
   },
-  create: function create() {
-    console.log(this.$store.state);
-  }
+  create: function create() {}
 });
 
 /***/ }),
@@ -2508,7 +2513,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.errors = null;
       this.sending = true;
       axios.post("/api/reviews", this.review).then(function (response) {
-        console.log(response);
         _this2.success = 201 == response.status;
       })["catch"](function (err) {
         if (Object(_shared_utils_response__WEBPACK_IMPORTED_MODULE_1__["is422"])(err)) {
@@ -60608,16 +60612,21 @@ var render = function() {
       { staticClass: "text-uppercase text-secondary font-weight-bolder" },
       [
         _vm._v("\n    Check Availability\n    "),
-        _vm.noAvailability
-          ? _c("span", { staticClass: "text-danger" }, [
-              _vm._v("(NOT AVAILABLE)")
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.hasAvailability
-          ? _c("span", { staticClass: "text-success" }, [_vm._v("(Available)")])
-          : _vm._e()
-      ]
+        _c("transition", { attrs: { name: "fade" } }, [
+          _vm.noAvailability
+            ? _c("span", { staticClass: "text-danger" }, [
+                _vm._v("(NOT AVAILABLE)")
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.hasAvailability
+            ? _c("span", { staticClass: "text-success" }, [
+                _vm._v("(Available)")
+              ])
+            : _vm._e()
+        ])
+      ],
+      1
     ),
     _vm._v(" "),
     _c("div", { staticClass: "form-row" }, [
@@ -60715,7 +60724,16 @@ var render = function() {
         attrs: { disabled: _vm.loading },
         on: { click: _vm.check }
       },
-      [_vm._v("Check")]
+      [
+        !_vm.loading ? _c("span", [_vm._v("Check")]) : _vm._e(),
+        _vm._v(" "),
+        _vm.loading
+          ? _c("span", [
+              _c("i", { staticClass: "fa fa-circle-notch fa-spin" }),
+              _vm._v("\n      Checking...\n    ")
+            ])
+          : _vm._e()
+      ]
     )
   ])
 }
