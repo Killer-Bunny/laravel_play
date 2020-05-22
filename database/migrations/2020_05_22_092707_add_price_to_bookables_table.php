@@ -14,7 +14,8 @@ class AddPriceToBookablesTable extends Migration
     public function up()
     {
         Schema::table('bookables', function (Blueprint $table) {
-            //
+            $table->unsignedInteger('price');
+
         });
     }
 
@@ -26,7 +27,7 @@ class AddPriceToBookablesTable extends Migration
     public function down()
     {
         Schema::table('bookables', function (Blueprint $table) {
-            //
+            $table->dropColumn('price');
         });
     }
 }
