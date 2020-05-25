@@ -119,13 +119,13 @@
     },
     computed: {
       hasErrors() {
-        return 422 == this.status && this.errors != null;
+        return 422 === this.status && this.errors != null;
       },
       hasAvailability() {
-        return 200 == this.status;
+        return 200 === this.status;
       },
       noAvailability() {
-        return 403 == this.status;
+        return 403 === this.status;
       }
     },
     create() {

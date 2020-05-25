@@ -27,8 +27,23 @@
         <price-breakdown v-if="price" :price="price" class="mb-4"></price-breakdown>
       </transition>
       <transition name="fade">
-        <button class="btn btn-outline-secondary btn-block" v-if="price">Book now</button>
+        <button
+          class="btn btn-outline-secondary btn-block"
+          v-if="price"
+          @click="addToBasket"
+          :disabled="inBasketAlready"
+        >Book now</button>
       </transition>
+
+      <button
+        class="btn btn-outline-secondary btn-block"
+        v-if="inBasketAlready"
+        @click="removeFromBasket"
+      >Remove from basket</button>
+
+      <div class="mt-4 text-muted warning" v-if="inBasketAlready">
+        Object is in the basket, in order to modify remove from basket first
+      </div>
     </div>
   </div>
 </template>
@@ -65,9 +80,17 @@
           this.loading = false;
         });
     },
-    computed: mapState({
-      lastSearch: "lastSearch"
-    }),
+    computed: {
+      ...mapState({
+        lastSearch: "lastSearch"
+      }),
+      inBasketAlready() {
+        if(null === this.bookable) {
+          return false
+        }
+        return this.$store.getters.inBasketAlready(this.bookable.id)
+      }
+    },
     methods: {
       async checkPrice(hasAvailability) {
         if(!hasAvailability) {
@@ -82,7 +105,23 @@
         } catch(err) {
           this.price = null;
         }
+      },
+      addToBasket() {
+        this.$store.dispatch('addToBasket', {
+          bookable: this.bookable,
+          price: this.price,
+          dates: this.lastSearch
+        })
+      },
+      removeFromBasket() {
+        this.$store.dispatch('removeFromBasket', this.bookable.id)
       }
     }
   }
 </script>
+
+<style scoped>
+  .warning {
+    font-size: 0.7rem;
+  }
+</style>
